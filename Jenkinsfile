@@ -8,9 +8,12 @@ pipeline {
 	
   node(){
 	stage ('test1 - Build') {
-	 - when:
-      condition: "$test"
 	   steps {
+	   conditionalSteps { 
+	        condition {
+	            booleanCondition('${ENV,var="test"}')
+	        }
+	        steps{
 		build job: 'test2 - Build', parameters: [
         string(name: 'text', value: env.NAME)
     ], wait: false
